@@ -33,3 +33,17 @@ Resources:
           Properties:
             Path: /
             Method: get
+  AddService:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: filename.handler-function
+      Runtime: nodejs6.10
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /add/{x}/{y}
+            Method: get
